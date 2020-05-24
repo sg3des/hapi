@@ -7,10 +7,6 @@ import (
 	"github.com/labstack/echo"
 )
 
-func init() {
-	log.SetFlags(log.Lshortfile)
-}
-
 type HAPI struct {
 	e *echo.Echo
 }
@@ -33,8 +29,6 @@ func handle(f interface{}) echo.HandlerFunc {
 
 	return func(c echo.Context) (err error) {
 		in := make([]reflect.Value, rt.NumIn())
-
-		// req := c.Request()
 
 		// bind request to handler input variables
 		for i := 0; i < rt.NumIn(); i++ {
@@ -62,27 +56,6 @@ func handle(f interface{}) echo.HandlerFunc {
 					in[i] = reflect.ValueOf(file[0])
 					break
 				}
-
-				// in[i] =
-			// case arg.Kind() == reflect.Ptr:
-			// 	argPtr := reflect.New(arg)
-			// 	argIntf := argPtr.Interface()
-
-			// 	if err := c.Bind(argIntf); err != nil {
-			// 		return err
-			// 	}
-
-			// 	in[i] = argPtr.Elem()
-
-			// case arg.Kind() == reflect.Struct:
-			// 	argPtr := reflect.New(arg)
-			// 	argIntf := argPtr.Interface()
-
-			// 	if err := c.Bind(argIntf); err != nil {
-			// 		return err
-			// 	}
-
-			// 	in[i] = argPtr.Elem()
 
 			default:
 				argPtr := reflect.New(arg)
